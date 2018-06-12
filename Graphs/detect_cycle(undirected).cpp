@@ -1,97 +1,77 @@
-//Detecting cycle in undirected graph
-
-#include <bits/stdc++.h>
+#include<bits/stdc++.h>
 using namespace std;
+#define N 105
 
-const int N = 104;
-int id[N], sz[N], comp;
-
-void init(int V)
+int size[N], parent[N];
+void initialise(int V)
 {
-    for(int i = 1; i<=V; i++)
-    {
-        id[i] = i;
-        sz[i] = 1;
-    }
-    comp = V;
-    
-    return;
+	
+	for(int i = 0; i < V; i++)
+	{
+		size[i] = 1;
+		parent[i] = i;
+	}
+
 }
 
-int find_id(int u)// O(log*V)
+int find(int u)
 {
+	int root = u;
+	while(parent[root]!= root)
+	{
+		parent[root] = parent[parent[root]];
+		root = parent[root];
+	}
 
-    int fin = u;
-    
-    while(id[fin] != fin)
-    {
-        fin = id[fin];
-    }
-    
-    int parent;
-    while(id[u] != fin) 
-    {
-        parent = id[u];
-        id[u] = fin;   
-        u = parent;
-    }
-    
-    return id[u];
+	return root;
 }
 
-void merge(int a, int b) // O(logV)
+void merge(int x, int y)
 {
-    a = find_id(a);
-    b = find_id(b);
-    
-    comp--;
-    
-    if(sz[b] < sz[a]) 
-    {
-        id[b] = a;
-        sz[a] += sz[b];
-    }
-    else
-    {
-        id[a] = b;
-        sz[b] += sz[a];
-    }
-    
-    return;
-}
- 
-bool isConnected(int a, int b) // O(logV)
-{
-    return (find_id(a) == find_id(b));
+	int root_x = parent[x];
+	int root_y = parent[y];
+
+	if(size[root_x] < size[root_y])
+	{
+		parent[root_x] = root_y;
+		size[root_y] += size[root_x];
+	}
+
+	else
+	{
+		parent[root_y] = root_x;
+		size[root_x] += size[root_y];
+	}
 }
 
 int main()
 {
 	freopen("in.in", "r", stdin);
     freopen("out.out", "w", stdout);
-    int V, E, a, b;
-    cin >> V >> E;
-    
-    init(V);
-    
-    for(int i = 1; i<=E; i++)
-    {
-        cin >> a >> b;
-        
-        if(isConnected(a, b) == true)
-        	{
-        		cout << "Cycle found!";
-        		return 0;
-        	}
-        
-        else
 
-            merge(a, b);
-    }
-    
-    
-    
-    cout << "Cycle not found" << "\n";
-    
-    return 0;
+	int V, E, a, b;
+	cin >> V >> E;
+
+	initialise(V);
+
+	for(int i = 0; i < E; i++)
+	{
+		cin >> a >> b;
+		if(find(a) == find(b))
+		{
+			cout << "Cycle found";
+			return 0;
+		}
+		else
+		{
+			merge(a, b);
+		}
+	}
+
+	cout << "Cycle not found";
+
+	return 0;
+
+
+
 }
