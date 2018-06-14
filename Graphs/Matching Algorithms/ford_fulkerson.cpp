@@ -1,4 +1,4 @@
-//max flow-mix cut concept
+
 //time complexity: O(max flow* E)
 
 #include<bits/stdc++.h>
