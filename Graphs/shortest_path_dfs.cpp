@@ -18,7 +18,7 @@ void dfs(int source)
 	for(int i = 0; i < adj[source].size(); i++)
 	{
 		int neigh = adj[source][i].first;
-		cout << neigh << endl;
+		
 		if(visited[neigh] == false)
 		{
 			dfs(neigh);
