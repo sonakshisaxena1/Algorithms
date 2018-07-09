@@ -6,14 +6,9 @@ int main()
 	freopen("test.out", "w", stdout);
 	int n;
 	cin >> n;
-	for(int i = 2; i <= n; i++)
+	for(int i = 2; i <= sqrt(n); i++)
 	{
-		if(sqrt(n) < i)
-			{
-				cout << "Number->" << n << " Exponent->"<< 1 << endl;
-				break;
-			} 
-		
+				
 		if(n % i == 0)
 			{	
 				int count = 0;
@@ -27,6 +22,10 @@ int main()
 
 		
 	}
+
+	if(n != 1)
+		cout << "Number->" << n << " Exponent->"<< 1 << endl;
+
 
 	return 0;
 }
