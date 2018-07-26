@@ -33,7 +33,7 @@ int find_id(int u) // Path Compression // O(log*V)
         u = parent;
     }
     
-    return id[u];
+    return fin;
 }
 
 void merge(int a, int b) // O(logV)
