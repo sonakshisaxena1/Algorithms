@@ -3,16 +3,17 @@ using namespace std;
 vector<int> a;
 bool prefixSum()
 {
-	sort(a.begin(), a.end());
-	vector<int> pf;
-	pf.push_back(a[0]);
-	for(int i = 1; i < a.size(); i++)
-	{
-		pf[i] = pf[i-1] + a[i];
-		if(pf[i] == 0)
-			return true;
-	}
-	return false;
+	unordered_set<int> sumSet;
+    int sum = 0;
+    for (int i = 0 ; i < a.size() ; i++)
+    {
+        sum += a[i];
+        if (sum == 0 || sumSet.find(sum) != sumSet.end())
+            return true;
+ 
+        sumSet.insert(sum);
+    }
+    return false;
 }
 
 
