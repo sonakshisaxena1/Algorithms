@@ -1,6 +1,7 @@
 #include<bits/stdc++.h>
 using namespace std;
 vector<int> a;
+
 int swap(unsigned int n)
 {
 	unsigned even_bits = n & 0xAAAAAAAA;
