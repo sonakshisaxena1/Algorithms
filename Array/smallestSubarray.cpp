@@ -42,7 +42,7 @@ int main()
 		a.push_back(x);
 	}
 	int res = smallestSubArray(sum);
-	if(res == a.size())
+	if(res == a.size()+1)
 		cout << "not possible";
 	else
 		cout << res;

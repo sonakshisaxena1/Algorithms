@@ -1,45 +1,36 @@
-#include <bits/stdc++.h>
+#include<bits/stdc++.h>
 using namespace std;
 
-int min(int x, int y, int z)
+int editDistance(string a, string b)
 {
-    return min(min(x, y), z);
-}
-
-int editDistance(string A, string B)
-{
-    int m = A.size();
-    int n = B.size();
-    if(n == 0)
-        return m;
-    if(m == 0)
-        return -1;
-    int dp[m+1][n+1];
-    for(int i = 0; i < m+1; i++)
-        for(int j = 0; j < n+1; j++)
+    if(b.length() == 0)
+        return a.length();
+    if(a.length() == 0)
+        return b.length();
+    int D[a.length()][b.length()];
+    for(int i = 0; i < a.length(); i++)
+    {
+        for(int j = 0; j < b.length(); j++)
         {
             if(i == 0)
-                dp[i][j] = j;
+                D[i][j] = j;
             else if(j == 0)
-                dp[i][j] = i;
-            else if(A[i-1] == B[j-1])
-                dp[i][j] = dp[i-1][j-1];
+                D[i][j] = i;
+            else if(a[i] == b[j])
+                D[i][j] = D[i-1][j-1];
             else
-                dp[i][j] = min(dp[i-1][j-1], dp[i][j-1], dp[i-1][j]) + 1;
+                D[i][j] = min(min(D[i-1][j], D[i][j-1]), D[i-1][j-1]) + 1;
+
         }
-
-    return dp[m][n];
-
+    }
+    return D[a.length()-1][b.length()-1];
 }
 int main()
 {
-	ios::sync_with_stdio(false);
-    freopen("test.in", "r", stdin);
-    freopen("test.out", "w", stdout);
-    string A, B;
-    cin >> A >> B;
-    cout << editDistance(A, B);
-	
-	
-	return 0;
+    freopen("in.in", "r", stdin);
+    freopen("out.out", "w", stdout);
+    string a, b;
+    cin >> a >> b;
+    cout << editDistance(a, b);
+    return 0;
 }
