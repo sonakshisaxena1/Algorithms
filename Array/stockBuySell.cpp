@@ -1,7 +1,4 @@
-//Kadane's algorithm
-//tracks max sum contagious segment among all positive segments
-//O(n)
-
+//Famous Stock Buy Sell Problem
 #include<bits/stdc++.h>
 using namespace std;
 vector<int> A;
