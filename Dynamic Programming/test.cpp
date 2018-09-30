@@ -1,39 +1,52 @@
-//Kadane's algorithm
-//tracks max sum contagious segment among all positive segments
-//O(n)
-
+//prime set subsequences
 #include<bits/stdc++.h>
 using namespace std;
-vector<int> A;
 
-iint stockBuySell()
+int solve(int A)
 {
-	if(A.size() == 0)
-		return 0;
+	int result = 1; 
+    int dp[A+1];
+    dp[1] = 1, dp[2] = 1, dp[3] = 1;
+    for(int i = 4; i <= A; i++)
+    {
+        int result = 1;
+        for(int j = 1; j < i; j++)
+        {
+            if(i%j == 0)
+                result = (result * j * dp[j])%1000000007;
+            cout << result << "\n";
+        }
 
-	int sol = 0, minima = A[0];
-	for(int i = 1; i < A.size(); i++)
-	{
-		if(A[i] < minima)
-			minima= A[i];
-		sol = max(sol, A[i] - minima);
-	}
-	return sol;
+        dp[i] = result;
+    }
+     for(int i = 1; i <= A; i++)
+        	cout << dp[i] << " ";
+        cout << "\n";
+    return dp[A]%1000000007;
 }
-
 int main()
 {
 	freopen("in.in", "r", stdin);
 	freopen("out.out", "w", stdout);
 	int n;
 	cin >> n;
-	for(int i = 0; i < r; i++)
+	cout<< solve(n);
+	return 0;
+}
+/*
+int main()
+{
+	freopen("in.in", "r", stdin);
+	freopen("out.out", "w", stdout);`
+	int n;
+	cin >> n;
+	for(int i = 0; i < n; i++)
 	{
 			int x;
 			cin >> x;
 			A.push_back(x);
 	}
-	cout << stockBuySell() ;
+	cout << solve() ;
 	return 0;
 
-}
+}*/
