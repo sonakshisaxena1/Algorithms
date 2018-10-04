@@ -2,27 +2,23 @@
 #include<bits/stdc++.h>
 using namespace std;
 
-int solve(int A)
+vector<int> solve(int A, int B, int C, int D)
 {
-	int result = 1; 
-    int dp[A+1];
-    dp[1] = 1, dp[2] = 1, dp[3] = 1;
-    for(int i = 4; i <= A; i++)
-    {
-        int result = 1;
-        for(int j = 1; j < i; j++)
-        {
-            if(i%j == 0)
-                result = (result * j * dp[j])%1000000007;
-            cout << result << "\n";
-        }
-
-        dp[i] = result;
-    }
-     for(int i = 1; i <= A; i++)
-        	cout << dp[i] << " ";
-        cout << "\n";
-    return dp[A]%1000000007;
+	priority_queue<int, vector<int>, greater<int> > q;
+	q.push(A);
+	q.push(B);
+	q.push(C);
+	vector<int> v;
+	
+	while(v.size() != D)
+	{
+		int tp = q.pop();
+		v.push_back(tp);
+		q.push(tp*A);
+		q.push(tp*B);
+		q.push(tp*C);
+	}
+	return v;
 }
 int main()
 {
