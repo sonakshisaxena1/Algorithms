@@ -6,38 +6,34 @@ typedef pair<int, int> pii;
 const int N = 105;
 vector<pair <int, int> >adj[N];
 int V, E;
-bool visited[N];
-void prim(int s)
+
+void dijkstra(int s)
 {
-    memset(visited,false, V);
-    priority_queue<pii, vector<pii>, greater <pii> > q;
-    vector<int> key(V, INF);
-    int parent[V];
-    memset(parent, -1, V);
+    vector<int> dist(V, INF);
+    
+    priority_queue< pii , vector < pii >, greater <pii> > q;
     q.push(make_pair(0,s));
-    visited[s] = true;
-    key[s] = 0;
+    dist[s] = 0;
     while(!q.empty())
     {
         int u = q.top().second;
-        visited[u] = true;
         q.pop();
         for(int i = 0; i < adj[u].size(); i++)
         {
             int v = adj[u][i].first;
-            int weight= adj[u][i].second;
-            if(visited[v] == false && key[v] > weight)
+            int weight = adj[u][i].second;
+            if(dist[v] > dist[u] + weight)
             {
-                key[v] = weight;
-                q.push(make_pair(weight, v));
-                parent[v] = u;
+                dist[v] = dist[u] + weight;
+                q.push(make_pair(dist[v], v));
             }
+            
         }
     }
-
-    cout << "Edges in MST: " << "\n";
-    for(int i = 1; i < V; i++)
-        cout  << parent[i] << " - " << i << "\n";
+    for(int i = 0; i < V; i++)
+    {
+        cout << "Vertex: "<< i << " Distance: " << dist[i] << "\n";
+    }
 }
 
 int main()
@@ -52,6 +48,6 @@ int main()
         adj[a].push_back(make_pair(b,w));
         adj[b].push_back(make_pair(a,w));
     }
-    prim(0);
+    dijkstra(0);
     return 0;
 }

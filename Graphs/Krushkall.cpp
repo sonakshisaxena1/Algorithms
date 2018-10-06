@@ -1,95 +1,81 @@
-#include <bits/stdc++.h>
+//O(ElogV)
+#include<bits/stdc++.h>
 using namespace std;
-//Krushkal
-const int N = 104;//array size->N
-int id[N], sz[N];
-
-vector< pair<int, int> > adj[N];
-
-pair< int, pair<int, int> > Edges[N];
-
-void init(int V)
+#define N 105
+typedef pair <int, int> pii;
+pair<int, pii> edges[N];
+vector<pii> adj[N];
+int size[N], parent[N];
+int V, E;
+void intialise()
 {
-    for(int i = 1; i<=V; i++)
-    {
-        id[i] = i;
-        sz[i] = 1;
-    }
-    return;
+    memset(size, 1, N + 1);
+    for(int i = 1; i <= V; i++)
+        parent[i] = i;
 }
 
-int root(int a)
+int find(int u)
 {
-    int fin = a;
-    while(id[fin] != fin)
-        fin = id[fin];
-    int temp;
-    while(id[u] != u)
+    int root  = u;
+    while(parent[root] != root)
     {
-        temp = id[u];
-        id[u] = temp;
-        u = temp;
+        parent[root] = parent[parent[root]];
+        root = parent[root];
     }
-    return fin;
+    return root;
+}
+void merge(int x, int y)
+{
+    int root_x = parent[x];
+    int root_y = parent[y];
+    if(size[root_x] < size[root_y])
+    {
+        parent[root_x] = root_y;
+        size[root_y] += size[root_x];
+    }
+    else
+    {
+        parent[root_y] = root_x;
+        size[root_x] += size[root_y];
+    }
 }
 
-void merge(int a, int b)
+bool isConnected(int x, int y)
 {
-    a = root(a);
-    b = root(b);
-    
-    if(sz[a] < sz[b])
-    {
-        id[a] = b;
-        sz[b] += sz[a];
-        
-        return;
-    }
-    
-    id[b] = a;
-    sz[a] += sz[b];
-    
-    return;
-}
-
-bool isConnected(int a, int b)
-{
-    return (root(a) == root(b));
+    return (find(x) == find(y));
 }
 
 int main()
 {
-    int V, E, a, b, w, sum = 0;
+    freopen("in.in", "r",stdin);
+    freopen("test.out", "w", stdout);
     cin >> V >> E;
-    
-    for(int i = 1; i<=E; i++)
+    intialise();
+    int sum = 0;
+    for(int i = 1; i <= E; i++)
     {
+        int a, b, w;
         cin >> a >> b >> w;
-        
-        Edges[i].first = w;
-        Edges[i].second.first = a;
-        Edges[i].second.second = b;
+        edges[i].first = w;
+        edges[i].second.first = a;
+        edges[i].second.second = b;
+       
     }
-    
-    sort(Edges + 1, Edges + 1 + E);
-    
-    for(int i = 1; i<=E; i++)
+
+    sort(edges + 1, edges + 1 + E);
+    for(int i = 1; i <= E; i++)
     {
-        a = Edges[i].second.first;
-        b = Edges[i].second.second;
-        
+        int a = edges[i].second.first;
+        int b = edges[i].second.second;
+        int w = edges[i].first;
         if(isConnected(a, b) == false)
         {
             sum += w;
-            
-            adj[a].push_back(make_pair(b, w));
-            adj[b].push_back(make_pair(a, w));
-            
-            merge(a, b);
+            adj[a].push_back(make_pair(b,w));
+            adj[b].push_back(make_pair(a,w));
+            merge(a,b);
         }
     }
-    
-    
-    
+    cout << sum;
     return 0;
 }
