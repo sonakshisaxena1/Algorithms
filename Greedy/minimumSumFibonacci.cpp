@@ -1,12 +1,12 @@
-//O(ElogV)
+//Given a number k, find the required minimum number of Fibonacci terms whose sum equal to k. We can choose a Fibonacci number multiple times.
 #include<bits/stdc++.h>
 using namespace std;
 vector<int>f;
 
 void findFibo(int k)
 {
-    int i = 2, nextTerm; 
-    //f.push_back(0); 
+    int i = 3, nextTerm; 
+    f.push_back(0); 
     f.push_back(1); 
     f.push_back(1); 
 
