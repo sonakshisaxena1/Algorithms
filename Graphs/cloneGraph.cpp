@@ -24,7 +24,7 @@ void clone(int s)
                 visited[neigh] = true;
                 q.push_back(neigh);
                 adj1[tp].push_back(neigh);
-                adj2[neigh].push_back(tp);
+                adj1[neigh].push_back(tp);
 
             }
         }
