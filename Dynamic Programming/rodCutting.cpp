@@ -1,7 +1,6 @@
 #include<bits/stdc++.h>
 using namespace std;
 vector<int> price;
-
 vector<int> backtrack(int s[][], int n)
 {
     int x = n;
