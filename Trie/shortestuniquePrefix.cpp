@@ -1,4 +1,4 @@
-//Trie implementation
+//Shortest unique Prefix
 
 #include<bits/stdc++.h>
 #include<unordered_map>
@@ -13,10 +13,7 @@ void insert(int node, int index)
 {
     val[node]++;
     if(s.size() == index)
-    {
-        // val[node]++;  ---> number of strings ending at this node
         return;
-    }
     int c = s[index] - 'a';
     if(adj[node][c] == 0)
     {
