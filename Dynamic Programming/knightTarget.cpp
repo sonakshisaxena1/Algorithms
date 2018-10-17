@@ -1,4 +1,4 @@
-
+//Reach a target using a knight
 #include <bits/stdc++.h>
 using namespace std;
 vector<int>A;
