@@ -20,6 +20,7 @@ int main()
 	for(int i = 1 ; i <= V; i++)
 		dist[i] = INT_MAX;
 
+	dist[1] = 0;
 	for(int i = 1; i<= V; i++)
 		for(int j = 1; j<=V; j++)
 			for(int k = 0; k<adjacency[j].size(); k++)

@@ -8,7 +8,7 @@ int solve()
     int n = A.size();
     int dp[n], prefixSum[n], minprefixSum[n];
     prefixSum[0] = A[0];
-    minprefixSum[0] = min(0, A[0]);
+    minprefixSum[0] = min(0, A[0]); //if empty is included too otherwise A[0]
     dp[0] = max(A[0], 0);
     for(int i = 1; i < n; i++)
     {

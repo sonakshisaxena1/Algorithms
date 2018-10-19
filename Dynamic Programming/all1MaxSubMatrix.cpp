@@ -1,4 +1,4 @@
-//Max SubMatrix with all 1s in a binary matrix
+//Max Rectangular SubMatrix with all 1s in a binary matrix
 #include <bits/stdc++.h>
 using namespace std;
 

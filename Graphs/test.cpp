@@ -1,59 +1,61 @@
 
 #include <bits/stdc++.h>
 using namespace std;
-vector<int>A;
-
-int solve(int startx, int starty, int endx, int endy, int n)
-{   
-    int dx[8] = {1, -1, 2, -2, 1, -1, 2, -2};
-    int dy[8] = {2, -2, 1, -1, -2, 2, -1, 1};
-    int dist[n+1][n+1];
-    memset(dist, 1000000, sizeof(dist));
-    bool visited[n+1][n+1];
-    memset(visited, false, sizeof(visited));
-    queue< pair <int, int > > q;
-    while(!q.empty())
-        q.pop();
-    q.push(make_pair(startx, starty));
-    dist[startx][starty] = 0;
-    int x, y;
-    while(!q.empty())
+vector<int>adj[205];
+int nodes, edges;
+bool visited[205];
+vector<int> v;
+int parent[205];
+void dfs(int u)
+{
+    visited[u] = true;
+    for(int i = 0; i < adj[u].size(); i++)
     {
-        x = q.front().first;
-        y = q.front().second;
-        q.pop();
-
-        // cout << x << " " << y << " " << dist[x][y] << "\n";
-        
-        if(visited[x][y])
-            continue;
-
-        visited[x][y] = true;
-        for(int i = 0; i < 8; i++)
+        int neigh = adj[u][i];
+        if(parent[u] != neigh)
         {
-            int neighx = x + dx[i];
-            int neighy = y + dy[i];
-            if(neighx < 1 || neighx > n || neighy < 1 || neighy > n)
-                continue;
-            dist[neighx][neighy] = min(dist[neighx][neighy], dist[x][y] + 1);
-            q.push(make_pair(neighx,neighy));
+            if(visited[neigh])
+            {
+                cout << neigh << " " << u << " ";
+                int temp = parent[u];
+                while(temp != neigh)
+                {
+                    cout << temp << " ";
+                    temp = parent[temp];
+                }
+                exit(0);
+            }
+            else
+            {   
+                parent[neigh] = u;
+                dfs(neigh);
+            }
+                
         }
     }
 
-    return dist[endx][endy];
 }
+
 
 int main()
 {
     freopen("in.in", "r", stdin);
     freopen("out.out", "w", stdout);
 
-    int n;
-    cin >> n;
-    int a, b, c, d;
-    cin >> a >> b >>c >> d;
-    cout << solve(a, b, c, d, n);
+    
+    cin >> nodes >> edges;
+    int a, b;
+    for(int i = 0; i < edges; i++)
+    {
+        int a, b; 
+        cin >> a >> b;
+        adj[a].push_back(b);
+        adj[b].push_back(a);
+    }
+    
 
+    dfs(1);
+    
     return 0;
 
 }

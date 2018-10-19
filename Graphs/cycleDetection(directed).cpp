@@ -4,7 +4,7 @@ vector<int>A;
 vector<int>adj[105];
 bool visited[105];
 int parent[105];
-int recStack[105];
+bool recStack[105];
 int V, E;
 void dfs(int u)
 {
@@ -16,7 +16,6 @@ void dfs(int u)
         if(!visited[neigh])
         {
             parent[neigh] = u;
-           
             dfs(neigh);
         }
         else if (recStack[neigh])

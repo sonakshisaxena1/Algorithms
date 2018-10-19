@@ -7,11 +7,11 @@ bool visited[105];
 stack<int> s;
 
 int V, E;
-int degree[105];
+// int degree[105];
 void topologicalSort(int u)
 {
     visited[u] = true;
-    for(int i =0;i < adj[u].size(); i++)
+    for(int i = 0;i < adj[u].size(); i++)
     {
         int neigh = adj[u][i];
         if(!visited[neigh])
@@ -36,12 +36,12 @@ int main()
         adj[a].push_back(b);
         degree[b]++;
     }
-    int src;
-    for(int i = 1; i <= V; i++)
-        if(degree[i] == 0)
-            src = i;
+    // int src;
+    // for(int i = 1; i <= V; i++)
+    //     if(degree[i] == 0)
+    //         src = i;
 
-    topologicalSort(src);
+    topologicalSort(1);
     while(!s.empty())
     {
         cout << s.top() << " ";
