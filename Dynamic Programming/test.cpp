@@ -1,24 +1,70 @@
-//prime set subsequences
+
 #include<bits/stdc++.h>
+#include<unordered_map>
 using namespace std;
 
-vector<int> solve(int A, int B, int C, int D)
+
+bool isBinaryNumber(int n)
 {
-	priority_queue<int, vector<int>, greater<int> > q;
-	q.push(A);
-	q.push(B);
-	q.push(C);
-	vector<int> v;
-	
-	while(v.size() != D)
+	while(n > 0)
 	{
-		int tp = q.pop();
-		v.push_back(tp);
-		q.push(tp*A);
-		q.push(tp*B);
-		q.push(tp*C);
+		if((n%10 == 0 )|| (n%10 == 1))
+			n /= 10;
+		else
+			return false;
 	}
-	return v;
+	return true;
+}
+int isDivisible(string t, int N)
+{
+	int r = 0; 
+    for (int i = 0; i < t.length(); i++) 
+    { 
+        r = r * 10 + (t[i] - '0'); 
+        r %= N; 
+    } 
+    return r; 
+}
+
+string solve(int n)
+{
+	if(isBinaryNumber(n))
+	{
+		string t = "";
+		while(n>0)
+		{
+			if(n%10 == 0)
+				t += "0";
+			else
+				t += "1";
+			n /= 10;
+		}
+		reverse(t.begin(), t.end());
+		return t;
+	}
+	queue<string> q;
+	set<int>visit;
+	string t = "1";
+	q.push(t);
+	while(!q.empty())
+	{
+		string u = q.front();
+		q.pop();
+		int r = isDivisible(u, n);
+		if(r == 0)
+			return u;
+		else if(visit.find(r) == visit.end())
+		{
+			visit.insert(r);
+			q.push(u+"0");
+			q.push(u+"1");
+
+		}
+
+
+	}
+	return "";
+
 }
 int main()
 {
@@ -26,23 +72,9 @@ int main()
 	freopen("out.out", "w", stdout);
 	int n;
 	cin >> n;
-	cout<< solve(n);
+	
+	cout << solve(n);
+	
 	return 0;
 }
-/*
-int main()
-{
-	freopen("in.in", "r", stdin);
-	freopen("out.out", "w", stdout);`
-	int n;
-	cin >> n;
-	for(int i = 0; i < n; i++)
-	{
-			int x;
-			cin >> x;
-			A.push_back(x);
-	}
-	cout << solve() ;
-	return 0;
 
-}*/
