@@ -2,10 +2,6 @@
 #include<unordered_map>
 using namespace std;
 typedef pair<string, int> psi;
-vector<int> adj[200000];
-vector<int> adj1[200000];
-int V, E;
-bool visited[200000];
 
 bool interleaved(string a, string b, string c)
 {

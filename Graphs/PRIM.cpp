@@ -96,7 +96,7 @@ int main()
 		cout << "Node " << i << "\n";
 
 		cout << "Neighbours -> ";
-		for(int j = 0; j<MST[i].size(); j++)
+		for(int j = 0; j < MST[i].size(); j++)
 			cout << MST[i][j].first << " ";
 
 		cout << "\n\n";

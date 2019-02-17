@@ -4,7 +4,8 @@
 using namespace std;
 vector<int>A;
 #define INF 1000007
-int solve() {
+int solve() 
+{
     
     int n  = A.size();
     if(n == 0)

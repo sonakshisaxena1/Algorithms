@@ -1,80 +1,59 @@
-
 #include<bits/stdc++.h>
-#include<unordered_map>
 using namespace std;
+vector<int>A;
+vector<int>adj[105];
+bool visited[105];
 
 
-bool isBinaryNumber(int n)
+void arrange()
 {
-	while(n > 0)
+	int n = A.size();
+	bool flag[n];
+	memset(flag, false, sizeof(flag));
+	for(int i = 0; i < n; i++)
 	{
-		if((n%10 == 0 )|| (n%10 == 1))
-			n /= 10;
-		else
-			return false;
-	}
-	return true;
-}
-int isDivisible(string t, int N)
-{
-	int r = 0; 
-    for (int i = 0; i < t.length(); i++) 
-    { 
-        r = r * 10 + (t[i] - '0'); 
-        r %= N; 
-    } 
-    return r; 
-}
-
-string solve(int n)
-{
-	if(isBinaryNumber(n))
-	{
-		string t = "";
-		while(n>0)
+		if(flag[i] == false && A[i] == A[i+1])
 		{
-			if(n%10 == 0)
-				t += "0";
-			else
-				t += "1";
-			n /= 10;
-		}
-		reverse(t.begin(), t.end());
-		return t;
-	}
-	queue<string> q;
-	set<int>visit;
-	string t = "1";
-	q.push(t);
-	while(!q.empty())
-	{
-		string u = q.front();
-		q.pop();
-		int r = isDivisible(u, n);
-		if(r == 0)
-			return u;
-		else if(visit.find(r) == visit.end())
-		{
-			visit.insert(r);
-			q.push(u+"0");
-			q.push(u+"1");
-
+			A[i] = 2*A[i];
+			A[i+1] = 0;
+			flag[i] =true;
+			flag[i+1] = false;
 		}
 
-
 	}
-	return "";
+
+	int last = 0;
+	for(int i = 0; i < n; i++)
+	{
+		if(last == 0 && A[i] == 0)
+			last = i;
+		else if(A[i] != 0)
+		{
+			int temp = A[i];
+			A[i] = 0;
+			A[last] = temp;
+			last = i;
+		}
+	}
+	for(int i = 0; i < n; i++)
+		cout << A[i] << " ";
 
 }
 int main()
 {
-	freopen("in.in", "r", stdin);
-	freopen("out.out", "w", stdout);
-	int n;
-	cin >> n;
-	
-	cout << solve(n);
-	
-	return 0;
-}
 
+    freopen("in.in", "r", stdin);
+    freopen("out.out", "w", stdout);
+    int n;
+    cin >> n;
+    for(int i = 1; i <= n; i++)
+    {
+       int x;
+       cin >> x;
+       A.push_back(x);
+    }
+
+    arrange();
+    return 0;
+    
+}

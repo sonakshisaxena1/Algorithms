@@ -1,55 +1,63 @@
-#include<bits/stdc++.h>
+#include <bits/stdc++.h>
 using namespace std;
 
-struct node{
-	int data;
-	struct node* left;
-	struct node* right;
-};
+const int N = 100005;
+vector<int> adj[N];
+int deepestLeaf[N], ans[N];
 
-struct node* newNode(int idata)
+void dfs(int u, int p)// p-->parent
 {
-	struct node* root = new struct node;
-	root->data = idata;
-	root->left = NULL;
-	root->right = NULL;
-	return root;
-}
+	int neigh;
+	bool leaf = true;
 
-int height(struct node* node)
-{
-	if(node == NULL)
-		return 0;
-	return (1+ max(height(node->left), height(node->right)));
-}
+	deepestLeaf[u] = ans = 0;//for every node, the farthest distance of any leaf from it
 
-int diameter(struct node* node)
-{
-	int left_subtree = height(node->left);
-	int right_subtree = height(node->right);
-	return (1+left_subtree+right_subtree);
+	vector<int> v;
+	v.clear();
+	for(int i = 0; i < adj[u].size(); i++)
+	{
+		neigh = adj[u][i];
+		if(neigh != p)
+		{
+			dfs(neigh, u);
+
+			leaf = false;
+
+			deepestLeaf[u] = max(deepestLeaf[u], deepestLeaf[neigh] + 1);
+			v.push_back(deepestLeaf[neigh] + 1);
+		}
+	}
+
+	ans = deepestLeaf[u];
+
+	sort(v.begin(), v.end(), greater<int>());
+	if(v.size() > 1)
+		ans = max(ans, v[0] + v[1]);
+
+	return;
 }
 
 int main()
 {
- 
-  /* Constructed binary tree is 
-            1
-          /   \
-        2      3
-      /  \
-    4     5
-  */
-  freopen("in.in", "r", stdin);
-  freopen("out.out", "w", stdout); 
-  struct node *root = newNode(1);
-  root->left        = newNode(2);
-  root->right       = newNode(3);
-  root->left->left  = newNode(4);
-  root->left->right = newNode(5);
- 
-  printf("Diameter of the given binary tree is %d\n", diameter(root));
- 
-  getchar();
-  return 0;
+    // freopen("in.in", "r", stdin);
+    // freopen("out.out", "w", stdout);
+
+    int n, a, b;
+    cin >> n;
+    for(int i = 1; i<n; i++)
+    {
+    	cin >> a >> b;
+    	adj[a].push_back(b);
+    	adj[b].push_back(a);
+    }
+
+    dfs(1, 0);
+
+    int final_ans = 0;
+    for(int i = 1; i<=n; i++)
+    	final_ans = max(final_ans, ans[i]);
+
+    cout << final_ans << "\n";
+
+    return 0;
 }

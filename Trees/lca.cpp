@@ -11,7 +11,7 @@ void dfs(int u, int level)
 {
     visited[u] = true;
     l[u] = level;
-    for(int i =0; i < adj[u].size(); i++)
+    for(int i = 0; i < adj[u].size(); i++)
     {
         int neigh = adj[u][i];
         if(!visited[neigh])
