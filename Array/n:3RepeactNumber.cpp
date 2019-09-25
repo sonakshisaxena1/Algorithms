@@ -33,7 +33,7 @@ int isNBy3()
             count2--;
         }
     }
-    // cout << first << " " <<second <<" \n";
+   
     count1 = 0;
     count2 = 0;
     for(int i = 0; i < a.size(); i++)
@@ -43,7 +43,7 @@ int isNBy3()
         else if(a[i] == second)
             count2++;
     }
-     // cout << count1 << count2 << "\n";
+     
     if(count1 > (a.size()/3))
         return first;
     else if(count2 > (a.size()/3))
@@ -68,7 +68,7 @@ int main()
     if(y == -1)
         cout << "No";
     else
-        cout << y;
+        cout << "yes";
     
 
     return 0;
